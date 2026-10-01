@@ -58,14 +58,37 @@ An installed Chrome can be used instead of downloading Chromium. In Git Bash:
 PLAYWRIGHT_CHANNEL=chrome npm test
 ```
 
-## Deploy
+## Host on GitHub Pages
+
+The deployment workflow is `.github/workflows/deploy-pages.yml`. It builds the portfolio for the repository path `/Portfolio/` and publishes only `dist/`.
+
+One-time setup:
+
+1. Open [Portfolio → Settings → Pages](https://github.com/Milindu-Weerawarna/Portfolio/settings/pages).
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**. Do not select “Deploy from a branch”; the repository contains source code that must be built first.
+3. Commit and push the deployment configuration to `main`.
+4. Open the repository’s **Actions** tab and wait for **Deploy portfolio to GitHub Pages** to finish. If the configuration was pushed before Pages was enabled, select the workflow and use **Run workflow** after enabling Pages.
+5. Visit **https://milindu-weerawarna.github.io/Portfolio/** after the deployment succeeds. The first publish may take a few minutes.
+
+Future pushes to `main` automatically rebuild and deploy the site. No personal access token, paid hosting, or separate `gh-pages` branch is required for a public repository.
+
+To check the Pages build locally:
+
+```sh
+npm run build:pages
+npm run preview
+```
+
+Open `http://localhost:4173/Portfolio/` (or the port Vite prints). The regular `npm run dev` and `npm run build` still use the root path so existing local tests continue to work.
+
+## Other hosting
 
 Deploy only `dist/` to any static host. For Vercel or Netlify, use build command `npm run build` and output directory `dist`. No client-side router or server rewrites are needed.
 
 Before publishing:
 
-1. Replace the relative `og:image` in `index.html` with the absolute deployed URL (for example, your site’s URL followed by `/social-preview.jpg`). Add a canonical URL and `og:url` once the real domain is known.
-2. Confirm the public CV and displayed email/phone are the information you want to share.
-3. If deploying below a subpath, configure Vite’s `base` and adjust the favicon and social metadata paths in `index.html` accordingly. Application asset paths already respect Vite’s base.
+1. Confirm the public CV and displayed email/phone are the information you want to share.
+2. If changing the domain or repository name, update the canonical URL, `og:url`, and `og:image` in `index.html` and the Pages base path in `package.json`.
+3. Do not deploy the original files in `source/`. Application assets and the favicon respect Vite’s build base.
 
 LinkedIn did not provide readable public content during development; no unverified LinkedIn claims were added. External project and credential destinations were extracted directly from the CV, but external services may require login or change availability over time.
