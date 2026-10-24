@@ -60,7 +60,7 @@ PLAYWRIGHT_CHANNEL=chrome npm test
 
 ## Host on GitHub Pages
 
-The deployment workflow is `.github/workflows/deploy-pages.yml`. It builds the portfolio for the repository path `/Portfolio/` and publishes only `dist/`.
+The deployment workflow is `.github/workflows/deploy-pages.yml`. It builds the portfolio for the custom domain root (`/`) and publishes only `dist/`.
 
 One-time setup:
 
@@ -68,7 +68,7 @@ One-time setup:
 2. Under **Build and deployment**, set **Source** to **GitHub Actions**. Do not select “Deploy from a branch”; the repository contains source code that must be built first.
 3. Commit and push the deployment configuration to `main`.
 4. Open the repository’s **Actions** tab and wait for **Deploy portfolio to GitHub Pages** to finish. If the configuration was pushed before Pages was enabled, select the workflow and use **Run workflow** after enabling Pages.
-5. Visit **https://milindu-weerawarna.github.io/Portfolio/** after the deployment succeeds. The first publish may take a few minutes.
+5. Visit **https://portfolio.milindu.work/** after the deployment succeeds. The first publish may take a few minutes.
 
 Future pushes to `main` automatically rebuild and deploy the site. No personal access token, paid hosting, or separate `gh-pages` branch is required for a public repository.
 
@@ -79,7 +79,7 @@ npm run build:pages
 npm run preview
 ```
 
-Open `http://localhost:4173/Portfolio/` (or the port Vite prints). The regular `npm run dev` and `npm run build` still use the root path so existing local tests continue to work.
+Open `http://localhost:4173/` (or the port Vite prints). The regular `npm run dev` and `npm run build` also use the root path so existing local tests continue to work.
 
 ## Other hosting
 
@@ -88,7 +88,7 @@ Deploy only `dist/` to any static host. For Vercel or Netlify, use build command
 Before publishing:
 
 1. Confirm the public CV and displayed email/phone are the information you want to share.
-2. If changing the domain or repository name, update the canonical URL, `og:url`, and `og:image` in `index.html` and the Pages base path in `package.json`.
+2. If changing the domain, update the canonical URL, `og:url`, and `og:image` in `index.html`, and update `public/CNAME`.
 3. Do not deploy the original files in `source/`. Application assets and the favicon respect Vite’s build base.
 
 LinkedIn did not provide readable public content during development; no unverified LinkedIn claims were added. External project and credential destinations were extracted directly from the CV, but external services may require login or change availability over time.
